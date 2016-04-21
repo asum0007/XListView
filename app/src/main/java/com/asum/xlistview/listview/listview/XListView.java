@@ -22,218 +22,232 @@ import java.util.ArrayList;
  * @author Asum
  */
 public class XListView extends SwipeRefreshLayout {
-	protected Context context;
-	private ListView listView;
-	private XListViewAdapter adapter;
+    protected Context context;
+    private CanMontiorListView listView;
+    private XListViewAdapter adapter;
 
-	private Class<?> itemClass;
-	private Class<?> footerClass, headClass;
-	private XBaseRecyclerHeaderView headerView;
-	private XBaseRecyclerFooterView footerView;
-	private int space;
-	private boolean scrollBarIsShow;
-	private boolean canPullUpToRefresh;
-	private OnXBaseRecyclerCallBack itemCallBack;
-	private OnXListViewCallBack listViewCallBack;
+    private Class<?> itemClass;
+    private Class<?> footerClass, headClass;
+    private XBaseRecyclerHeaderView headerView;
+    private XBaseRecyclerFooterView footerView;
+    private int space;
+    private boolean scrollBarIsShow;
+    private boolean canPullUpToRefresh;
 
-	public XListView(Context context, AttributeSet attrs) {
-		super(context, attrs);
-		this.context = context;
-	}
+    private OnXBaseRecyclerCallBack itemCallBack;
+    private OnXListViewCallBack listViewCallBack;
+    private CanMontiorListView.ListViewScrollChangeListener listViewScrollChangeListener;
 
-	public XListView(Context context) {
-		super(context);
-		this.context = context;
-	}
+    public XListView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        this.context = context;
+    }
 
-	public void setItemClass(Class<?> itemClass) {
-		this.itemClass = itemClass;
-	}
+    public XListView(Context context) {
+        super(context);
+        this.context = context;
+    }
 
-	public void changeItemClass(Class<?> itemClass) {
-		this.itemClass = itemClass;
-		if (adapter != null) {
-			initializeAdapter();
-			listView.setAdapter(adapter);
-		}
-	}
+    public void setItemClass(Class<?> itemClass) {
+        this.itemClass = itemClass;
+    }
 
-	public void setFooterClass(Class<?> footerClass) {
-		this.footerClass = footerClass;
-	}
+    public void changeItemClass(Class<?> itemClass) {
+        this.itemClass = itemClass;
+        if (adapter != null) {
+            initializeAdapter();
+            listView.setAdapter(adapter);
+        }
+    }
 
-	public void setHeaderClass(Class<?> headClass) {
-		this.headClass = headClass;
-	}
+    public void setFooterClass(Class<?> footerClass) {
+        this.footerClass = footerClass;
+    }
 
-	public void setFooterView(XBaseRecyclerFooterView footerView) {
-		this.footerView = footerView;
-	}
+    public void setHeaderClass(Class<?> headClass) {
+        this.headClass = headClass;
+    }
 
-	public void setHeaderView(XBaseRecyclerHeaderView headerView) {
-		this.headerView = headerView;
-	}
+    public void setFooterView(XBaseRecyclerFooterView footerView) {
+        this.footerView = footerView;
+    }
 
-	public void setSpace(int space) {
-		this.space = space;
-	}
+    public void setHeaderView(XBaseRecyclerHeaderView headerView) {
+        this.headerView = headerView;
+    }
 
-	public void setScrollBarEnable(boolean scrollBarIsShow) {
-		this.scrollBarIsShow = scrollBarIsShow;
-	}
+    public void setSpace(int space) {
+        this.space = space;
+    }
 
-	public void setItemCallBack(OnXBaseRecyclerCallBack itemCallBack) {
-		this.itemCallBack = itemCallBack;
-	}
+    public void setScrollBarEnable(boolean scrollBarIsShow) {
+        this.scrollBarIsShow = scrollBarIsShow;
+    }
 
-	public void setListViewCallBack(OnXListViewCallBack listViewCallBack) {
-		this.listViewCallBack = listViewCallBack;
-	}
+    public void setItemCallBack(OnXBaseRecyclerCallBack itemCallBack) {
+        this.itemCallBack = itemCallBack;
+    }
 
-	public ListView getListView() {
-		return listView;
-	}
+    public void setListViewCallBack(OnXListViewCallBack listViewCallBack) {
+        this.listViewCallBack = listViewCallBack;
+    }
 
-	public void setPullDownRefreshEnable(boolean canPullDownToRefresh) {
-		this.setEnabled(canPullDownToRefresh);
-	}
+    public void setOnScrollListener(CanMontiorListView.ListViewScrollChangeListener listViewScrollChangeListener) {
+        this.listViewScrollChangeListener = listViewScrollChangeListener;
+    }
 
-	public void setPullUpRefreshEnable(boolean canPullUpToRefresh) {
-		this.canPullUpToRefresh = canPullUpToRefresh;
-	}
+    public ListView getListView() {
+        return listView;
+    }
 
-	public void initialize() {
-		getWidgets();
-		setWidgets();
-		addListener();
-	}
+    public void setPullDownRefreshEnable(boolean canPullDownToRefresh) {
+        this.setEnabled(canPullDownToRefresh);
+    }
 
-	public void showData(ArrayList<?> datas) {
-		adapter.setSources(datas);
-		adapter.notifyDataSetChanged();
-	}
+    public void setPullUpRefreshEnable(boolean canPullUpToRefresh) {
+        this.canPullUpToRefresh = canPullUpToRefresh;
+    }
 
-	public void refresh() {
-		adapter.notifyDataSetChanged();
-	}
+    public void initialize() {
+        getWidgets();
+        setWidgets();
+        addListener();
+    }
 
-	public void removeByIndex(int index) {
-		adapter.removeByIndex(index);
-		adapter.notifyDataSetChanged();
-	}
+    public void showData(ArrayList<?> datas) {
+        adapter.setSources(datas);
+        adapter.notifyDataSetChanged();
+    }
 
-	public void removeByRange(int startIndex, int endIndex) {
-		adapter.removeByRange(startIndex, endIndex);
-		adapter.notifyDataSetChanged();
-	}
+    public void refresh() {
+        adapter.notifyDataSetChanged();
+    }
 
-	public void removeByIndexs(int... indexs) {
-		adapter.removeByIndexs(indexs);
-		adapter.notifyDataSetChanged();
-	}
+    public void removeByIndex(int index) {
+        adapter.removeByIndex(index);
+        adapter.notifyDataSetChanged();
+    }
 
-	public void add(int index, Object data) {
-		adapter.add(index, data);
-		adapter.notifyDataSetChanged();
-	}
+    public void removeByRange(int startIndex, int endIndex) {
+        adapter.removeByRange(startIndex, endIndex);
+        adapter.notifyDataSetChanged();
+    }
 
-	public void add(Object data) {
-		adapter.add(data);
-		adapter.notifyDataSetChanged();
-	}
+    public void removeByIndexs(int... indexs) {
+        adapter.removeByIndexs(indexs);
+        adapter.notifyDataSetChanged();
+    }
 
-	public void removeAll() {
-		adapter.removeAll();
-		adapter.notifyDataSetChanged();
-	}
+    public void add(int index, Object data) {
+        adapter.add(index, data);
+        adapter.notifyDataSetChanged();
+    }
 
-	private void getWidgets() {
-		listView = new ListView(context);
-	}
+    public void add(Object data) {
+        adapter.add(data);
+        adapter.notifyDataSetChanged();
+    }
 
-	private void setWidgets() {
-		initializeAdapter();
+    public void removeAll() {
+        adapter.removeAll();
+        adapter.notifyDataSetChanged();
+    }
 
-		this.addView(listView);
-		if (footerClass != null) {
-			try {
-				XBaseRecyclerFooterView footerView = (XBaseRecyclerFooterView) footerClass.getConstructor(Context.class).newInstance(context);
-				listView.addFooterView(footerView);
-				footerView.initialize();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+    private void getWidgets() {
+        listView = new CanMontiorListView(context);
+    }
 
-		if (footerView != null) {
-			listView.addFooterView(footerView);
-		}
+    private void setWidgets() {
+        initializeAdapter();
 
-		if (headClass != null) {
-			try {
-				XBaseRecyclerHeaderView headView = (XBaseRecyclerHeaderView) headClass.getConstructor(Context.class).newInstance(context);
-				listView.addHeaderView(headView);
-				headView.initialize();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+        this.addView(listView);
+        if (footerClass != null) {
+            try {
+                XBaseRecyclerFooterView footerView = (XBaseRecyclerFooterView) footerClass.getConstructor(Context.class).newInstance(context);
+                listView.addFooterView(footerView);
+                footerView.initialize();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
-		if (headerView != null) {
-			listView.addHeaderView(headerView);
-		}
+        if (footerView != null) {
+            listView.addFooterView(footerView);
+        }
 
-		listView.setDivider(new ColorDrawable(0x00000000));
-		listView.setDividerHeight((int) space);
-		listView.setVerticalScrollBarEnabled(scrollBarIsShow);
+        if (headClass != null) {
+            try {
+                XBaseRecyclerHeaderView headView = (XBaseRecyclerHeaderView) headClass.getConstructor(Context.class).newInstance(context);
+                listView.addHeaderView(headView);
+                headView.initialize();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
-		listView.setAdapter(adapter);
-	}
+        if (headerView != null) {
+            listView.addHeaderView(headerView);
+        }
 
-	private void initializeAdapter() {
-		adapter = new XListViewAdapter(context, new OnXBaseRecyclerCallBack() {
-			public void onLongClick(Object data, int flag) {
-				if (itemCallBack != null) {
-					itemCallBack.onLongClick(data, flag);
-				}
-			}
+        listView.setDivider(new ColorDrawable(0x00000000));
+        listView.setDividerHeight((int) space);
+        listView.setVerticalScrollBarEnabled(scrollBarIsShow);
 
-			public void onClick(Object data, int flag) {
-				if (itemCallBack != null) {
-					itemCallBack.onClick(data, flag);
-				}
-			}
-		});
-		adapter.setItemClass(itemClass);
-	}
+        listView.setAdapter(adapter);
+    }
 
-	private void addListener() {
-		listView.setOnScrollListener(new OnScrollListener() {
-			// 0：停止滚动，1：正在滚动，2：手指有抛动作
-			public void onScrollStateChanged(AbsListView arg0, int type) {
-				if (type == 0) {
-					int itemCount = adapter.getCount() + listView.getFooterViewsCount();
-					if (listView.getLastVisiblePosition() == itemCount - 1) {
-						if (canPullUpToRefresh) {
-							if (listViewCallBack != null && !XListView.this.isRefreshing()) {
-								listViewCallBack.pullUpRefresh();
-							}
-							XListView.this.setRefreshing(true);
-						}
-					}
-				}
-			}
+    private void initializeAdapter() {
+        adapter = new XListViewAdapter(context, new OnXBaseRecyclerCallBack() {
+            public void onLongClick(Object data, int flag) {
+                if (itemCallBack != null) {
+                    itemCallBack.onLongClick(data, flag);
+                }
+            }
 
-			public void onScroll(AbsListView arg0, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-			}
-		});
+            public void onClick(Object data, int flag) {
+                if (itemCallBack != null) {
+                    itemCallBack.onClick(data, flag);
+                }
+            }
+        });
+        adapter.setItemClass(itemClass);
+    }
 
-		this.setOnRefreshListener(new OnRefreshListener() {
-			public void onRefresh() {
-				if (listViewCallBack != null) {
-					listViewCallBack.pullDownRefresh();
-				}
-			}
-		});
-	}
+    private void addListener() {
+        listView.setOnScrollListener(new OnScrollListener() {
+            // 0：停止滚动，1：正在滚动，2：手指有抛动作
+            public void onScrollStateChanged(AbsListView arg0, int type) {
+                if (type == 0) {
+                    int itemCount = adapter.getCount() + listView.getFooterViewsCount();
+                    if (listView.getLastVisiblePosition() == itemCount - 1) {
+                        if (canPullUpToRefresh) {
+                            if (listViewCallBack != null && !XListView.this.isRefreshing()) {
+                                listViewCallBack.pullUpRefresh();
+                            }
+                            XListView.this.setRefreshing(true);
+                        }
+                    }
+                }
+            }
+
+            public void onScroll(AbsListView arg0, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+            }
+        });
+
+        listView.setOnListViewScrollChangeListener(new CanMontiorListView.ListViewScrollChangeListener() {
+            public void onScrollChanged(CanMontiorListView scrollView, int x, int y, int oldx, int oldy) {
+                if (listViewScrollChangeListener != null) {
+                    listViewScrollChangeListener.onScrollChanged(scrollView, x, y, oldx, oldy);
+                }
+            }
+        });
+
+        this.setOnRefreshListener(new OnRefreshListener() {
+            public void onRefresh() {
+                if (listViewCallBack != null) {
+                    listViewCallBack.pullDownRefresh();
+                }
+            }
+        });
+    }
 }
