@@ -58,7 +58,12 @@ recyclerView.setHeaderView(new TestHeaderView(context));
 recyclerView.setFooterView(new TestFooterView(context));
 ```
 
-设置滚动时的动画（来源地都实现，则为两者结合的动画）
+设置滚动时动画（默认null）
+```Java
+recyclerView.setItemAnimator(null);
+```
+
+实时设置滚动时的动画（来源地都实现，则为两者结合的动画）
 ```Java
 recyclerView.setAdapterAnimCallBack(new OnAdapterAnimCallBack() {
     //动画来自资源文件
@@ -80,6 +85,10 @@ recyclerView.setAdapterAnimCallBack(new OnAdapterAnimCallBack() {
         return true;
     }
 });
+```
+滚动到指定位置
+```Java
+recyclerView.scrollToPosition(4);
 ```
 
 下拉上拉监听
