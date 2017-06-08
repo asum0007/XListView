@@ -3,34 +3,39 @@ XListView
 
 public XRecyclerView recyclerView;
 
-//是否需要下拉刷新（默认false）
+//是否需要下拉刷新（默认false）<br>
+```
 recyclerView.setPullDownRefreshEnable(false);
+```
 
-//是否需要触底加载更多（默认false）
+//是否需要触底加载更多（默认false）<br>
+```
 recyclerView.setPullUpRefreshEnable(false);
+```
 
-//每一条Item之间的间距（默认0）
+//每一条Item之间的间距（默认0）<br>
 recyclerView.setSpace(space);
 
-//隐藏滚动条（默认true）
+//隐藏滚动条（默认true）<br>
 recyclerView.setScrollBarEnable(false);
 
-//布局方式（必须调用的方法）
+//布局方式（必须调用的方法）<br>
 recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
-//设置条目类（必须调用的方法）
+//设置条目类（必须调用的方法）<br>
 recyclerView.setItemClass(TestRecyclerViewItem.class);
 
-//这是顶部
+//这是顶部<br>
 recyclerView.setHeaderView(new TestHeaderView(context));
 
-//设置底部
+//设置底部<br>
 recyclerView.setFooterView(new TestFooterView(context));
 
-//初始化（必须调用的方法）
+//初始化（必须调用的方法）<br>
 recyclerView.initialize();
 
-//顶部View
+//顶部View<br>
+```Java
 public class TestHeaderView extends XBaseRecyclerHeaderView{
     private TextView testTextView;
     
@@ -44,8 +49,10 @@ public class TestHeaderView extends XBaseRecyclerHeaderView{
         testTextView.setText("这是顶部");
     }
 }
+```
 
-//底部View
+//底部View<br>
+```Java
 public class TestFooterView extends XBaseRecyclerFooterView{
     private TextView testTextView;
     
@@ -59,8 +66,10 @@ public class TestFooterView extends XBaseRecyclerFooterView{
         testTextView.setText("这是底部");
     }
 }
+```
 
-//内容条目
+//内容条目<br>
+```Java
 public class TestRecyclerViewItem extends XBaseRecyclerViewItem {
     private Context context;
     private TextView testTextView;
@@ -79,3 +88,4 @@ public class TestRecyclerViewItem extends XBaseRecyclerViewItem {
       testTextView.setText((String)source);
     }
 }
+```
