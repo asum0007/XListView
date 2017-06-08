@@ -8,7 +8,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.DecelerateInterpolator;
 
 import com.asum.xlistview.R;
 import com.asum.xlistview.listview.callback.OnAdapterAnimCallBack;
@@ -24,8 +23,6 @@ import com.asum.xlistview.listview.listview.XListView;
 import com.asum.xlistview.listview.recycleview.XRecyclerView;
 
 import java.util.ArrayList;
-
-import jp.wasabeef.recyclerview.animators.SlideInDownAnimator;
 
 public class MainActivity extends Activity {
     private XListView listView;
@@ -88,7 +85,7 @@ public class MainActivity extends Activity {
         recyclerView.setBottomSpaceEnable(false);
 
         //设置添加删除动画
-        recyclerView.setItemAnimator(new SlideInDownAnimator(new DecelerateInterpolator()));
+//        recyclerView.setItemAnimator(new SlideInDownAnimator(new DecelerateInterpolator()));
 
         //设置滚动时的动画（来源地都实现，则为两者结合的动画）
         recyclerView.setAdapterAnimCallBack(new OnAdapterAnimCallBack() {
