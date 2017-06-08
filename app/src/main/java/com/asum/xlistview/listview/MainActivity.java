@@ -5,14 +5,18 @@ import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 
 import com.asum.xlistview.R;
 import com.asum.xlistview.listview.callback.OnAdapterAnimCallBack;
+import com.asum.xlistview.listview.callback.OnRecyclerViewItemSelectCallBack;
+import com.asum.xlistview.listview.callback.OnScrolledCallBack;
 import com.asum.xlistview.listview.callback.OnXBaseRecyclerCallBack;
 import com.asum.xlistview.listview.callback.OnXListViewCallBack;
+import com.asum.xlistview.listview.item.XBaseRecyclerViewItem;
 import com.asum.xlistview.listview.item.demo.TestFooterView;
 import com.asum.xlistview.listview.item.demo.TestHeaderView;
 import com.asum.xlistview.listview.item.demo.TestRecylerView;
@@ -125,6 +129,21 @@ public class MainActivity extends Activity {
             }
         });
 
+        //实时改变显示的条目
+        recyclerView.setOnRecyclerViewItemSelectCallBack(new OnRecyclerViewItemSelectCallBack() {
+            public int getItemViewType(int position) {
+                return 0;
+            }
+
+            public XBaseRecyclerViewItem getView(int viewType) {
+                return null;
+            }
+
+            public Object getData(int position) {
+                return null;
+            }
+        });
+
         //条目点击监听
         recyclerView.setItemCallBack(new OnXBaseRecyclerCallBack() {
             public void onClick(Object data, int flag) {
@@ -133,6 +152,17 @@ public class MainActivity extends Activity {
 
             public void onLongClick(Object data, int flag) {
                 Log.i("XJW", "长点击" + flag);
+            }
+        });
+
+        //滚动监听
+        recyclerView.setScrolledCallBack(new OnScrolledCallBack() {
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+
+            }
+
+            public void onScrollStateChanged(RecyclerView recyclerView, int type) {
+
             }
         });
 
