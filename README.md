@@ -23,25 +23,37 @@ recyclerView.setPullUpRefreshEnable(false);
 recyclerView.setSpace(space);
 ```
 
-//隐藏滚动条（默认true）<br>
+隐藏滚动条（默认true）
+```Java
 recyclerView.setScrollBarEnable(false);
+```
 
-//布局方式（必须调用的方法）<br>
+布局方式（必须调用的方法）
+```Java
 recyclerView.setLayoutManager(new LinearLayoutManager(context));
+```
 
-//设置条目类（必须调用的方法）<br>
+设置条目类（必须调用的方法）
+```Java
 recyclerView.setItemClass(TestRecyclerViewItem.class);
+```
 
-//这是顶部<br>
+这是顶部
+```Java
 recyclerView.setHeaderView(new TestHeaderView(context));
+```
 
-//设置底部<br>
+设置底部
+```Java
 recyclerView.setFooterView(new TestFooterView(context));
+```
 
-//初始化（必须调用的方法）<br>
+初始化（必须调用的方法）
+```Java
 recyclerView.initialize();
+```
 
-//顶部View<br>
+顶部View
 ```Java
 public class TestHeaderView extends XBaseRecyclerHeaderView{
     private TextView testTextView;
@@ -58,7 +70,7 @@ public class TestHeaderView extends XBaseRecyclerHeaderView{
 }
 ```
 
-//底部View<br>
+底部View
 ```Java
 public class TestFooterView extends XBaseRecyclerFooterView{
     private TextView testTextView;
@@ -75,7 +87,7 @@ public class TestFooterView extends XBaseRecyclerFooterView{
 }
 ```
 
-//内容条目<br>
+内容条目
 ```Java
 public class TestRecyclerViewItem extends XBaseRecyclerViewItem {
     private Context context;
