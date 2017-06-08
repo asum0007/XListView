@@ -3,18 +3,20 @@ XListView
 
 public XRecyclerView recyclerView;
 
-//是否需要下拉刷新（默认false）<br>
-```
+是否需要下拉刷新（默认false）
+```Java
 recyclerView.setPullDownRefreshEnable(false);
 ```
 
-//是否需要触底加载更多（默认false）<br>
-```
+是否需要触底加载更多（默认false）
+```Java
 recyclerView.setPullUpRefreshEnable(false);
 ```
 
-//每一条Item之间的间距（默认0）<br>
+每一条Item之间的间距（默认0）
+```Java
 recyclerView.setSpace(space);
+```
 
 //隐藏滚动条（默认true）<br>
 recyclerView.setScrollBarEnable(false);
