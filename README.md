@@ -38,6 +38,11 @@ recyclerView.setLayoutManager(new LinearLayoutManager(context));
 recyclerView.setItemClass(TestRecyclerViewItem.class);
 ```
 
+更换条目类
+```Java
+recyclerView.changeItemClass(Test2RecyclerViewItem.class);
+```
+
 这是顶部
 ```Java
 recyclerView.setHeaderView(new TestHeaderView(context));
