@@ -1,7 +1,12 @@
 # XListView
 XListView
 
+XListView是基于SwipeRefreshLayout和RecyclerView实现的免Adapter，可下拉刷新和上拉加载更多的"ListView"
+
+声明
+```Java
 public XRecyclerView recyclerView;
+```
 
 是否需要下拉刷新（默认false）
 ```Java
