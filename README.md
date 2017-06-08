@@ -201,11 +201,11 @@ public class TestRecyclerViewItem extends XBaseRecyclerViewItem {
         });
 
         textView.setOnLongClickListener(new View.OnLongClickListener() {
-			public boolean onLongClick(View v) {
-				beLongClick("长点击传递此数据", 1);
-				return true;
-			}
-		});
+            public boolean onLongClick(View v) {
+		beLongClick("长点击传递此数据", 1);
+		return true;
+	    }
+	});
     }
     
     public void showData(Object source) {
