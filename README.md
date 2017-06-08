@@ -43,7 +43,7 @@ recyclerView.setItemClass(TestRecyclerViewItem.class);
 recyclerView.changeItemClass(Test2RecyclerViewItem.class);
 ```
 
-这是顶部
+设置顶部
 ```Java
 recyclerView.setHeaderView(new TestHeaderView(context));
 ```
@@ -51,6 +51,30 @@ recyclerView.setHeaderView(new TestHeaderView(context));
 设置底部
 ```Java
 recyclerView.setFooterView(new TestFooterView(context));
+```
+
+设置滚动时的动画（来源地都实现，则为两者结合的动画）
+```Java
+recyclerView.setAdapterAnimCallBack(new OnAdapterAnimCallBack() {
+    //动画来自资源文件
+    public int[] fromXmls(View view) {
+        return null;
+    }
+
+    //动画来自Animator集合
+    public Animator[] fromAnimators(View view) {
+        Animator[] animators = {
+            ObjectAnimator.ofFloat(view, "scaleX", 0.0f, 1.0f),
+            ObjectAnimator.ofFloat(view, "scaleY", 0.0f, 1.0f)
+        };
+        return animators;
+    }
+
+    //是否只显示一次动画
+    public boolean firstOnly() {
+        return true;
+    }
+});
 ```
 
 初始化（必须调用的方法）
