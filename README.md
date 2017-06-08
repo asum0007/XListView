@@ -23,6 +23,11 @@ recyclerView.setPullUpRefreshEnable(false);
 recyclerView.setSpace(space);
 ```
 
+是否显示最后一条的间隔（默认false）
+```Java
+recyclerView.setBottomSpaceEnable(false);
+```
+
 隐藏滚动条（默认true）
 ```Java
 recyclerView.setScrollBarEnable(false);
@@ -77,6 +82,45 @@ recyclerView.setAdapterAnimCallBack(new OnAdapterAnimCallBack() {
 });
 ```
 
+下拉上拉监听
+```Java
+recyclerView.setRecyclerViewCallBack(new OnXListViewCallBack() {
+    public void pullUpRefresh() {
+        Log.i("XJW","下拉刷新");
+    }
+
+    public void pullDownRefresh() {
+        Log.i("XJW","上拉加载更多");
+    }
+});
+```
+
+条目点击监听
+```Java
+recyclerView.setItemCallBack(new OnXBaseRecyclerCallBack() {
+    public void onClick(Object data, int flag) {
+        Log.i("XJW", "点击" + flag);
+    }
+
+    public void onLongClick(Object data, int flag) {
+        Log.i("XJW", "长点击" + flag);
+    }
+});
+```
+
+滚动监听
+```Java
+recyclerView.setScrolledCallBack(new OnScrolledCallBack() {
+    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+
+    }
+
+    public void onScrollStateChanged(RecyclerView recyclerView, int type) {
+
+    }
+});
+```
+
 初始化（必须调用的方法）
 ```Java
 recyclerView.initialize();
@@ -116,6 +160,25 @@ public class TestFooterView extends XBaseRecyclerFooterView{
 }
 ```
 
+展示数据
+```Java
+ArrayList<String> datas = new ArrayList<>();
+for (int i = 0; i < 4; i++) {
+    datas.add("数据" + i);
+}
+recyclerView.showData(datas);
+```
+
+添加数据
+```Java
+recyclerView.addData("添加的数据", 1);
+```
+
+移除数据
+```Java
+recyclerView.delData(1);
+```
+
 内容条目
 ```Java
 public class TestRecyclerViewItem extends XBaseRecyclerViewItem {
@@ -128,8 +191,21 @@ public class TestRecyclerViewItem extends XBaseRecyclerViewItem {
     }
 
     public void initialize() {
-      testTextView = new TextView(context);
-      this.addView(testTextView);
+        testTextView = new TextView(context);
+        this.addView(testTextView);
+      
+        testTextView.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                beClick("点击传递此数据", 0);
+            }
+        });
+
+        textView.setOnLongClickListener(new View.OnLongClickListener() {
+			public boolean onLongClick(View v) {
+				beLongClick("长点击传递此数据", 1);
+				return true;
+			}
+		});
     }
     
     public void showData(Object source) {
