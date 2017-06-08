@@ -130,6 +130,37 @@ recyclerView.setScrolledCallBack(new OnScrolledCallBack() {
 });
 ```
 
+实时改变显示的条目
+```Java
+recyclerView.setOnRecyclerViewItemSelectCallBack(new OnRecyclerViewItemSelectCallBack() {
+     public int getItemViewType(int position) {
+     	if (position < 10){
+	    return 999
+	} else {
+	    return 888;
+	}
+     }
+
+     public XBaseRecyclerViewItem getView(int viewType) {
+        XBaseRecyclerViewItem item;
+        if (viewType == 999){
+	    item = new TestRecyclerViewItem(context);
+	} else if (viewType == 888){
+	    item = new Test2RecyclerViewItem(context);
+	}
+	return item;
+     }
+
+     public Object getData(int position) {
+        if (position < 10){
+	    return datas.get(position);
+	} else {
+	    return data2s.get(position);
+	}
+     }
+});
+```
+
 初始化（必须调用的方法）
 ```Java
 recyclerView.initialize();
