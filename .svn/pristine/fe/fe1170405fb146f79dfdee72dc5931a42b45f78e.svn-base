@@ -1,0 +1,112 @@
+package com.asum.xlistview.listview;
+
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
+import android.app.Activity;
+import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
+import android.view.animation.DecelerateInterpolator;
+
+import com.asum.xlistview.R;
+import com.asum.xlistview.listview.callback.OnAdapterAnimCallBack;
+import com.asum.xlistview.listview.callback.OnXListViewCallBack;
+import com.asum.xlistview.listview.item.demo.TestFooterView;
+import com.asum.xlistview.listview.item.demo.TestHeaderView;
+import com.asum.xlistview.listview.item.demo.TestRecylerView;
+import com.asum.xlistview.listview.listview.XListView;
+import com.asum.xlistview.listview.recycleview.XRecyclerView;
+
+import java.util.ArrayList;
+
+import jp.wasabeef.recyclerview.animators.SlideInDownAnimator;
+
+public class MainActivity extends Activity {
+    private XListView listView;
+    private XRecyclerView recyclerView;
+
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        ArrayList<Integer> datas = new ArrayList<>();
+        for (int i = 0; i < 100; i++) {
+            datas.add(i);
+        }
+
+        listView = (XListView) findViewById(R.id.activity_test_listview);
+        listView.setItemClass(TestRecylerView.class);
+        listView.setFooterClass(TestFooterView.class);
+        listView.setSpace(25);
+        listView.setScrollBarEnable(false);
+        listView.setPullDownRefreshEnable(true);
+        listView.setPullUpRefreshEnable(false);
+        listView.initialize();
+        listView.setVisibility(View.GONE);
+
+        TestFooterView testFooterView = new TestFooterView(this);
+        testFooterView.initialize();
+
+        TestHeaderView testHeadView = new TestHeaderView(this);
+        testHeadView.initialize();
+
+        recyclerView = (XRecyclerView) findViewById(R.id.activity_test_recyclerview);
+        recyclerView.setScrollBarEnable(false);
+        recyclerView.setPullDownRefreshEnable(true);
+        recyclerView.setPullUpRefreshEnable(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setItemClass(TestRecylerView.class);
+        recyclerView.setHeaderView(testHeadView);
+        recyclerView.setFooterView(testFooterView);
+        recyclerView.setSpace(20);
+        recyclerView.setTopSpaceEnable(false);
+        recyclerView.setBottomSpaceEnable(false);
+        recyclerView.setItemAnimator(new SlideInDownAnimator(new DecelerateInterpolator()));
+
+        recyclerView.setAdapterAnimCallBack(new OnAdapterAnimCallBack() {
+            public int[] fromXmls(View view) {
+                return null;
+            }
+
+            public Animator[] fromAnimators(View view) {
+                Animator[] animators = {
+                        ObjectAnimator.ofFloat(view, "scaleX", 0.0f, 1.0f),
+                        ObjectAnimator.ofFloat(view, "scaleY", 0.0f, 1.0f)
+                };
+                return animators;
+            }
+
+            public boolean firstOnly() {
+                return true;
+            }
+        });
+
+        recyclerView.initialize();
+        recyclerView.showData(datas);
+
+        recyclerView.setRecyclerViewCallBack(new OnXListViewCallBack() {
+            public void pullUpRefresh() {
+
+            }
+
+            public void pullDownRefresh() {
+
+            }
+        });
+
+        findViewById(R.id.activity_add).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                recyclerView.addData(999, 1);
+                recyclerView.addData(999, 3);
+                recyclerView.addData(999, 5);
+                recyclerView.addData(999, 7);
+            }
+        });
+
+        findViewById(R.id.activity_del).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                recyclerView.delData(1);
+            }
+        });
+    }
+}
